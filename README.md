@@ -1,2 +1,2 @@
-# ActividadSemana2
-# Edwin Michael Ramos Cabrera
+# Juego Mokepon  
+# Programación Basica
