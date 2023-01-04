@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="website icon"  type="png" href="Imagenes/game_go_icon.png">
+    <script defer src="Javascript/mokepon.js"></script>
     <title>Mokepon!!!</title>
+    
 </head>
 <body>
     <h1>MOKEPON 🔥💧🍀</h1>
@@ -13,35 +15,38 @@
     <section id="seleccionar-mascota">
         <h2>Elige tu mascota:</h2>
         
-        MASCOTAS
-        <label for="hipodoge">Hipodoge</label>
-        <input type="radio" name="mascota" id="hipodoge"/>
+        <h3>MASCOTAS</h3> 
 
-        <label for="capipego">Capipego</label>
+        <label for="hipodoge">Hipodoge 🦛</label>
+        <input type="radio" name="mascota" id="hipodoge" checked/>
+
+        <label for="capipepo">Capipepo 🐢</label>
         <input type="radio" name="mascota" id="capipepo"/>
-        
-        <label for="ratigueya">Ratigueya</label>
+
+        <label for="ratigueya">Ratigueya 🐭</label>
         <input type="radio" name="mascota" id="ratigueya"/>
 
 
-        Hipodoge -> Agua
-        Capipepo -> Tierra
-        Ratigueya -> Fuego
-        Langostelvis -> Agua y Fuego
-        Tucapalma -> Agua y Tierra
-        Pydos -> Tierra y Fuego
+        Hipodoge 🐷-> Agua  🐋 🐬
+        Capipepo 🐻-> Tierra 🐍 🐊 🐢
+        Ratigueya 🐹-> Fuego 🐥 🐉 🐎 🐺
+        Langostelvis 🐴-> Agua y Fuego
+        Tucapalma 🦊 -> Agua y Tierra
+        Pydos 🐵-> Tierra y Fuego
 
-        <button>Seleccionar</button>
+        <button id="boton-mascota">Seleccionar</button>
     </section>
 
     <section id="seleccionar-ataque">
         <h2>Elije tu ataque:</h2>
-        <p>Tu mascota tiene <span>3</span> vidas</p>
-        <p>La mascotas del enemigo tiene <span>3</span> vidas</p>
+
+        <p>Tu mascota <span id="mascota-jugador"> </span> tiene <span>3</span> vidas</p>
+        <p>La mascota <span id="mascota-enemigo"> </span> del enemigo tiene <span>3</span> vidas</p>
+
         <p>
-            <button>Fuego 🔥</button>
-            <button>Agua 💧</button>
-            <button>Tierra 🍀</button>
+            <button id="boton-fuego">Fuego 🔥</button>
+            <button id="boton-agua">Agua 💧</button>
+            <button id="boton-tierra">Tierra 🍀</button>
         </p>
 
     </section>
@@ -51,9 +56,11 @@
     </section>
 
     <section id="reiniciar">
-        <button>Reiniciar</button>
+        <button id="boton-reiniciar">Reiniciar</button>
 
     </section>
+    
 
+    
 </body>
 </html>
