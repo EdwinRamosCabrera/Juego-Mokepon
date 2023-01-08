@@ -30,7 +30,7 @@ function seleccionarMascotaJugador() {
     sectionSeleccionarMascota.style.display = 'none';
 
     let sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque');
-    sectionSeleccionarAtaque.style.display = 'block';
+    sectionSeleccionarAtaque.style.display = 'flex';
 
     let inputHipodoge = document.getElementById('hipodoge');
     let inputCapipego = document.getElementById('capipepo');
@@ -133,21 +133,36 @@ function revisarVidas() {
 }
 
 function crearMensaje(resultado) {
-    let sectionMensajes = document.getElementById('mensajes');
-    let parrafo = document.createElement('p');
+    let sectionMensajes = document.getElementById('resultado');
+    let ataqueDelJugador = document.getElementById('ataque-del-jugador');
+    let ataqueDelEnemigo = document.getElementById('ataque-del-enemigo');
 
-    parrafo.innerHTML = 'Tú mascota atacó con ' + ataqueJugador + ', la mascota del enemigo atacó con ' + ataqueEnemigo + ' - ' + resultado;
+    //let notificacion = document.createElement('p');
+    let nuevoAtaqueDelJugador = document.createElement('p');
+    let nuevoAtaqueDelEnemigo = document.createElement('p');
 
-    sectionMensajes.appendChild(parrafo);
+    sectionMensajes.innerHTML = resultado;
+    //notificacion.innerHTML = resultado;
+    nuevoAtaqueDelJugador.innerHTML = ataqueJugador;
+    nuevoAtaqueDelEnemigo.innerHTML = ataqueEnemigo;
+
+    
+    // sectionMensajes.appendChild(notificacion);
+    ataqueDelJugador.appendChild(nuevoAtaqueDelJugador);
+    ataqueDelEnemigo.appendChild(nuevoAtaqueDelEnemigo);
+
+    //let parrafo = document.createElement('p');
+    //parrafo.innerHTML = 'Tú mascota atacó con ' + ataqueJugador + ', la mascota del enemigo atacó con ' + ataqueEnemigo + ' - ' + resultado;
+    //sectionMensajes.appendChild(parrafo);
 }
 
 function crearMensajeFinal(resultadoFinal) {
-    let sectionMensajes = document.getElementById('mensajes');
-    let parrafo = document.createElement('p');
+    let sectionMensajes = document.getElementById('resultado');
+  
+    // let parrafo = document.createElement('p');
+    sectionMensajes.innerHTML = resultadoFinal;
 
-    parrafo.innerHTML = resultadoFinal;
-
-    sectionMensajes.appendChild(parrafo);
+    // sectionMensajes.appendChild(parrafo);
 
     let botonFuego = document.getElementById('boton-fuego');
     botonFuego.disabled = true;

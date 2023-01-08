@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@300&display=swap'); 
 
 body {
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Poppins', sans-serif;
     background-color: #6C00FF;
 }
 #seleccionar-mascota {
@@ -13,6 +13,7 @@ body {
 }
 
 .titulo {
+    font-family: 'Fredoka One', cursive;
     color: white;
     font-size: 32px;   
 }
@@ -29,7 +30,7 @@ body {
 }
 
 .tarjeta-de-mokepon {
-    display: flex;
+    display:flex;
     width: 200px;
     height: 100px;
     background: #11468f;
@@ -42,10 +43,71 @@ body {
 }
 
 .tarjeta-de-mokepon img {
-    width: 80px;
-    
+    width: 80px;   
+}
+
+#boton-mascota {
+   width: 180px;
+   height: 40px; 
+   border-radius: 20px;
+   background: transparent;
+   border: 2px solid white;
+   color: white;
+   font-family: 'Poppins', sans-serif;
+   font-weight: bold;
+   margin-top: 30px;
 }
 
 input {
     display: none;
 }
+
+.tarjeta-de-mokepon:hover {
+    cursor: pointer;
+}
+
+#seleccionar-ataque {
+    flex-direction: column;
+    align-items: center;  
+}
+
+.boton-de-ataque {
+    background-color: #11468f;
+    border-radius: 15px;
+    font-family: 'Poppins', sans-serif;
+    color: antiquewhite;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100px;
+    font-size: 17px;
+    border-color: transparent;
+}
+
+#mensajes {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 280px;
+    background-color: #EEEEEE;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+#boton-reiniciar {
+    border: transparent;
+    color: #11468f;
+    font-family: 'Poppins', sans-serif;
+}
+
+.ataques {
+    display: grid;
+    grid-template-columns: 100px 100px;
+    gap: 50px;
+    letter-spacing: 1px;
+    text-align: center;
+    border: 2px solid white;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
