@@ -23,23 +23,25 @@
         <h3>MASCOTAS</h3>
 
         <div class="tarjetas">
+
+            <input type="radio" name="mascota" id="hipodoge" checked />
             <label class="tarjeta-de-mokepon" for="hipodoge">
                 <p>Hipodoge</p>
                 <img src="/Imagenes/mokepon_hipodoge_attack.png" alt="hipodoge">
             </label>
-            <input type="radio" name="mascota" id="hipodoge" checked />
-
+            
+            <input type="radio" name="mascota" id="capipepo" />
             <label class="tarjeta-de-mokepon" for="capipepo">
                 <p>Capipepo</p>
                 <img src="/Imagenes/mokepon_capipepo_attack.png" alt="capipepo">
             </label>
-            <input type="radio" name="mascota" id="capipepo" />
-
+            
+            <input type="radio" name="mascota" id="ratigueya" />
             <label class="tarjeta-de-mokepon" for="ratigueya">
                 <p>Ratigueya</p>
                 <img src="/Imagenes/mokepon_ratigueya_attack.png" alt="ratigueya">
             </label>
-            <input type="radio" name="mascota" id="ratigueya" />
+            
         </div>
 
         <div class="">
@@ -61,7 +63,7 @@
         <h1 class="titulo">MOKEPON ! ! ! 🔥💧🍀</h1>
         <h2 class="subtitulo">Elige tu ataque:</h2>
 
-        <div>
+        <div class="tarjetas-ataque">
             <button id="boton-fuego" class="boton-de-ataque">Fuego 🔥</button>
             <button id="boton-agua" class="boton-de-ataque">Agua 💧</button>
             <button id="boton-tierra" class="boton-de-ataque">Tierra 🍀</button>
@@ -75,19 +77,19 @@
             </section>
 
             <!--<section id="mensajes">
-                <p>Tú mascota atacó con FUEGO, la mascota del enemigo atacó con TIERRA - GANASTE 🎉</p>
+                <p>Tú mascota atacó con FUEGO, la@ mascota del enemigo atacó con TIERRA - GANASTE 🎉</p>
              </section>-->
         </div>
 
         <div class="ataques">
-            <div class="">
+            <div class="ataques-jugador">
                 <p id="vidas-jugador">3</p>
                 <p id="mascota-jugador"></p>
                 <div id="ataque-del-jugador"></div>
                <!--  <p>Tu mascota <span > </span> tiene <span >3</span> vidas</p> -->
             </div>
 
-            <div class="">
+            <div class="ataques-enemigo">
                 <p id="vidas-enemigo">3</p>
                 <p id="mascota-enemigo"></p>
                 <div id="ataque-del-enemigo"></div>

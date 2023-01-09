@@ -24,7 +24,7 @@ body {
 }
 
 
-.tarjetas {
+.tarjetas, .tarjetas-ataque {
     display: flex;
     gap: 10px;
 }
@@ -59,7 +59,11 @@ body {
 }
 
 input {
-    display: none;
+    display: none; 
+}
+
+input:checked + label{
+    background-color: #FF7B54;
 }
 
 .tarjeta-de-mokepon:hover {
@@ -104,10 +108,23 @@ input {
     display: grid;
     grid-template-columns: 100px 100px;
     gap: 50px;
-    letter-spacing: 1px;
-    text-align: center;
+    /* letter-spacing: 1px;
+    text-align: center; */
     border: 2px solid white;
     border-radius: 10px;
     margin-top: 20px;
 }
+
+.ataques-jugador, .ataques-enemigo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 360px) {
+    .tarjetas, .tarjetas-ataque {
+        flex-direction: column;
+    }
+}
+
 
