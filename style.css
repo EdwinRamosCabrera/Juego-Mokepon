@@ -131,11 +131,30 @@ input:checked + label{
     border: 2px solid white;
 }
 
-@media (max-width: 360px) {
+#ver-mapa button {
+    width: 80px;
+    height: 40px; 
+    border-radius: 20px;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    margin: 5px 0px;
+}
+
+@media (max-width: 560px) {
     .tarjetas, .tarjetas-ataque {
         flex-direction: column;
     }
 }
 
+@media (max-width: 360px) {
+    #ver-mapa div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
 
 
