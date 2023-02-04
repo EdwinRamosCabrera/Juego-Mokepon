@@ -61,7 +61,8 @@ mapa.width = anchoDelMapa;
 mapa.height = alturaQueBuscamos;
 
 class Mokepon {
-    constructor(nombre, foto, vida, fotoMapa, /* x = 10, y = 10 */){
+    constructor(nombre, foto, vida, fotoMapa, id = null /* x = 10, y = 10 */){
+        this.id = id;
         this.nombre = nombre;
         this.foto = foto;
         this.vida = vida;
@@ -91,57 +92,47 @@ let hipodoge = new Mokepon ('Hipodoge', '/Imagenes/mokepon_hipodoge_attack.png',
 let capipepo = new Mokepon ('Capipepo', '/Imagenes/mokepon_capipepo_attack.png', 5, '/Imagenes/capipepo_mini.png');
 let ratigueya = new Mokepon ('Ratigueya', '/Imagenes/mokepon_ratigueya_attack.png', 5, '/Imagenes/ratigueya_mini.png');
 
-let hipodogeEnemigo = new Mokepon ('Hipodoge', '/Imagenes/mokepon_hipodoge_attack.png', 5, '/Imagenes/hipodoge_mini.png'/* , 80, 120 */);
-let capipepoEnemigo = new Mokepon ('Capipepo', '/Imagenes/mokepon_capipepo_attack.png', 5, '/Imagenes/capipepo_mini.png'/* , 150, 95 */);
-let ratigueyaEnemigo = new Mokepon ('Ratigueya', '/Imagenes/mokepon_ratigueya_attack.png', 5, '/Imagenes/ratigueya_mini.png'/* , 200, 190 */);
+/*
+let hipodogeEnemigo = new Mokepon ('Hipodoge', '/Imagenes/mokepon_hipodoge_attack.png', 5, '/Imagenes/hipodoge_mini.png'/* , 80, 120 );
+let capipepoEnemigo = new Mokepon ('Capipepo', '/Imagenes/mokepon_capipepo_attack.png', 5, '/Imagenes/capipepo_mini.png'/* , 150, 95 );
+let ratigueyaEnemigo = new Mokepon ('Ratigueya', '/Imagenes/mokepon_ratigueya_attack.png', 5, '/Imagenes/ratigueya_mini.png'/* , 200, 190 );
+*/
 
-hipodoge.ataques.push(
+const HIPODOGE_ATAQUES = [
     {nombre: '💧', id: 'boton-agua'},
     {nombre: '💧', id: 'boton-agua'},
     {nombre: '💧', id: 'boton-agua'},
     {nombre: '🔥', id: 'boton-fuego'},
-    {nombre: '🍀', id: 'boton-tierra'},
-);
+    {nombre: '🍀', id: 'boton-tierra'}
+];
 
-hipodogeEnemigo.ataques.push(
-    {nombre: '💧', id: 'boton-agua'},
-    {nombre: '💧', id: 'boton-agua'},
-    {nombre: '💧', id: 'boton-agua'},
-    {nombre: '🔥', id: 'boton-fuego'},
-    {nombre: '🍀', id: 'boton-tierra'},
-);
 
-capipepo.ataques.push(
-    {nombre: '🍀', id: 'boton-tierra'},
-    {nombre: '🍀', id: 'boton-tierra'},
-    {nombre: '🍀', id: 'boton-tierra'},
-    {nombre: '💧', id: 'boton-agua'},
-    {nombre: '🔥', id: 'boton-fuego'},    
-);
+hipodoge.ataques.push(...HIPODOGE_ATAQUES);  // los ... hace que se hubiera escrito todos los ataques dentro del parentesis en lugar de comportarse como una lista
 
-capipepoEnemigo.ataques.push(
-    {nombre: '🍀', id: 'boton-tierra'},
-    {nombre: '🍀', id: 'boton-tierra'},
-    {nombre: '🍀', id: 'boton-tierra'},
-    {nombre: '💧', id: 'boton-agua'},
-    {nombre: '🔥', id: 'boton-fuego'},    
-);
+//hipodogeEnemigo.ataques.push(...HIPODOGE_ATAQUES);
 
-ratigueya.ataques.push(
-    {nombre: '🔥', id: 'boton-fuego'},
-    {nombre: '🔥', id: 'boton-fuego'},
-    {nombre: '🔥', id: 'boton-fuego'},
-    {nombre: '💧', id: 'boton-agua'},
+const CAPIPEPO_ATAQUES = [
     {nombre: '🍀', id: 'boton-tierra'},
-);
+    {nombre: '🍀', id: 'boton-tierra'},
+    {nombre: '🍀', id: 'boton-tierra'},
+    {nombre: '💧', id: 'boton-agua'},
+    {nombre: '🔥', id: 'boton-fuego'}
+];
 
-ratigueyaEnemigo.ataques.push(
+capipepo.ataques.push(...CAPIPEPO_ATAQUES);
+
+//capipepoEnemigo.ataques.push(...CAPIPEPO_ATAQUES);
+
+const RATIGUEYA_ATAQUES = [
     {nombre: '🔥', id: 'boton-fuego'},
     {nombre: '🔥', id: 'boton-fuego'},
     {nombre: '🔥', id: 'boton-fuego'},
     {nombre: '💧', id: 'boton-agua'},
-    {nombre: '🍀', id: 'boton-tierra'},
-);
+    {nombre: '🍀', id: 'boton-tierra'}
+]
+ratigueya.ataques.push(...RATIGUEYA_ATAQUES);
+
+// ratigueyaEnemigo.ataques.push(...RATIGUEYA_ATAQUES);
 
 mokepones.push(hipodoge, capipepo, ratigueya);
 
@@ -401,6 +392,9 @@ function pintarCanvas() {
     lienzo.drawImage(mascotaJugadorObjeto.fondo, 0, 0, mapa.width, mapa.height) 
 /*     lienzo.drawImage(mascotaJugadorObjeto.mapaFoto, mascotaJugadorObjeto.x, mascotaJugadorObjeto.y, mascotaJugadorObjeto.ancho, mascotaJugadorObjeto.alto); */
     mascotaJugadorObjeto.pintarMokepon();
+
+    enviarPosicion(mascotaJugadorObjeto.x, mascotaJugadorObjeto.y);
+
     hipodogeEnemigo.pintarMokepon();
     capipepoEnemigo.pintarMokepon();
     ratigueyaEnemigo.pintarMokepon();
@@ -410,6 +404,43 @@ function pintarCanvas() {
         revisarColision(capipepoEnemigo);
         revisarColision(ratigueyaEnemigo);
     }
+}
+
+function enviarPosicion(x, y) {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/posicion`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            x,   // es igual a x: x soloq ue abreviado (la clave es x y el valor tabien es x)
+            y   // es igual a y: y
+        })
+    })  
+    .then(function (res) {
+        if(res.ok) {
+            res.json()
+            .then(function ({enemigos}){    // eso es usando spread xq sino seria .then(function (respuesta){respuesta.enemigos})
+                console.log(enemigos)       // enemiogs es la misma variable que se envio en el res.send ({enemigos})
+                enemigos.forEach(function(enemigo){
+                    let mokeponEnemigo = null
+                    const mokeponNombre = enemigo.mokepon.nombre || ""
+                    if(mokeponNombre === "Hipodoge") {
+                        mokeponEnemigo = new Mokepon ('Hipodoge', '/Imagenes/mokepon_hipodoge_attack.png', 5, '/Imagenes/hipodoge_mini.png');
+                    } else if (mokeponNombre === "Capipepo") {
+                        mokeponEnemigo = new Mokepon ('Capipepo', '/Imagenes/mokepon_capipepo_attack.png', 5, '/Imagenes/capipepo_mini.png');
+                    } else if(mokeponNombre === "Ratigueya") {
+                        mokeponEnemigo = new Mokepon ('Ratigueya', '/Imagenes/mokepon_ratigueya_attack.png', 5, '/Imagenes/ratigueya_mini.png');
+                    }
+
+                    mokeponEnemigo.x = enemigo.x;
+                    mokeponEnemigo.y = enemigo.y;
+
+                    mokeponEnemigo.pintarMokepon();
+                })           
+            })
+        }
+    })
 }
 
 function moverDerecha() {

@@ -17,6 +17,11 @@ class Jugador {
     asignarMokepon(mokepon){
         this.mokepon = mokepon
     };
+
+    actualizarPosicion(x, y) {
+        this.x = x;
+        this.y = y;
+    }
 }
 
 class Mokepon {
@@ -49,7 +54,27 @@ app.post('/mokepon/:jugadorId', (req, res) => {
     
     console.log(jugadores);
     console.log(jugadorId);
-    res.end();
+    res.end();   // Respondemos algo en este caso un dato vacio
+})
+
+app.post("/mokepon/:jugadorId/posicion", (req, res) => {
+    const jugadorId = req.params.jugadorId || "";
+    const x = req.body.x || 0;
+    const y = req.body.y || 0;
+
+    const jugadorIndex = jugadores.findIndex((jugador) => jugadorId === jugador.id);
+
+    if(jugadorIndex >= 0) {
+        jugadores[jugadorIndex].actualizarPosicion(x, y);
+    }
+
+    const enemigos = jugadores.filter((jugador) => jugadorId != jugador.id)       // filter es un metod de js que nos permite eecutar sobre las listas con filtro, con esto vamos a devolver a todos los enemigos
+
+
+    res.send({          //en expres.js solo puedes devolver un json no una lista
+        enemigos
+    }) 
+
 })
 
 app.listen(8080, () => {
