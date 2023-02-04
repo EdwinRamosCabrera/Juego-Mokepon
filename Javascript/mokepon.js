@@ -23,6 +23,7 @@ const mapa = document.getElementById('mapa');
 
 let jugadorId = null;
 let mokepones = [];
+let mokeponesEnemigos = [];
 let ataqueJugador = [];
 let ataqueEnemigo = [];
 let opcionDeMokepones;
@@ -395,9 +396,13 @@ function pintarCanvas() {
 
     enviarPosicion(mascotaJugadorObjeto.x, mascotaJugadorObjeto.y);
 
-    hipodogeEnemigo.pintarMokepon();
+    mokeponesEnemigos.forEach(function(mokepon) {
+        mokepon.pintarMokepon();
+    })
+
+/*     hipodogeEnemigo.pintarMokepon();
     capipepoEnemigo.pintarMokepon();
-    ratigueyaEnemigo.pintarMokepon();
+    ratigueyaEnemigo.pintarMokepon(); */
 
     if(mascotaJugadorObjeto.velocidadX !== 0 || mascotaJugadorObjeto.velocidadY !== 0) {
         revisarColision(hipodogeEnemigo);
@@ -422,7 +427,7 @@ function enviarPosicion(x, y) {
             res.json()
             .then(function ({enemigos}){    // eso es usando spread xq sino seria .then(function (respuesta){respuesta.enemigos})
                 console.log(enemigos)       // enemiogs es la misma variable que se envio en el res.send ({enemigos})
-                enemigos.forEach(function(enemigo){
+                mokeponesEnemigos = enemigos.map(function(enemigo){
                     let mokeponEnemigo = null
                     const mokeponNombre = enemigo.mokepon.nombre || ""
                     if(mokeponNombre === "Hipodoge") {
@@ -436,7 +441,9 @@ function enviarPosicion(x, y) {
                     mokeponEnemigo.x = enemigo.x;
                     mokeponEnemigo.y = enemigo.y;
 
-                    mokeponEnemigo.pintarMokepon();
+                    return mokeponEnemigo;;
+
+                    //mokeponEnemigo.pintarMokepon();
                 })           
             })
         }
