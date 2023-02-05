@@ -2,8 +2,10 @@
 
 const express = require('express');
 const cors = require('cors');
+const { response } = require('express');
 
 const app = express();
+app.use(express.static('public'))  
 app.use(cors());
 app.use(express.json());
 
@@ -21,6 +23,10 @@ class Jugador {
     actualizarPosicion(x, y) {
         this.x = x;
         this.y = y;
+    }
+
+    asignarAtaques(ataques) {
+        this.ataques = ataques;
     }
 }
 
@@ -68,13 +74,34 @@ app.post("/mokepon/:jugadorId/posicion", (req, res) => {
         jugadores[jugadorIndex].actualizarPosicion(x, y);
     }
 
-    const enemigos = jugadores.filter((jugador) => jugadorId != jugador.id)       // filter es un metod de js que nos permite eecutar sobre las listas con filtro, con esto vamos a devolver a todos los enemigos
+    const enemigos = jugadores.filter((jugador) => jugadorId != jugador.id)       // filter es un metod de js que nos permite ejecutar sobre las listas con filtro, con esto vamos a devolver a todos los enemigos
 
 
     res.send({          //en expres.js solo puedes devolver un json no una lista
         enemigos
     }) 
 
+})
+
+app.post('/mokepon/:jugadorId/ataques', (req, res) => {
+    const jugadorId = req.params.jugadorId || ""; 
+    const ataques = req.body.ataques || [];   
+
+    const jugadorIndex = jugadores.findIndex((jugador) => jugadorId === jugador.id);  
+    
+    if(jugadorIndex >= 0) {
+        jugadores[jugadorIndex].asignarAtaques(ataques);
+    }
+    
+    res.end();   
+})
+
+app.get("/mokepon/:jugadorId/ataques", (req, res) => {
+    const jugadorId = req.params.jugadorId || ""; 
+    const jugador = jugadores.find((jugador) => jugador.id === jugadorId)
+    res.send({
+        ataques: jugador.ataques || []
+    })
 })
 
 app.listen(8080, () => {

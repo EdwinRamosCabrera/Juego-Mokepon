@@ -22,6 +22,7 @@ const sectionVerMapa = document.getElementById('ver-mapa');
 const mapa = document.getElementById('mapa');
 
 let jugadorId = null;
+let enemigoId = null;
 let mokepones = [];
 let mokeponesEnemigos = [];
 let ataqueJugador = [];
@@ -180,10 +181,7 @@ function unirseAlJuego() {
     })
 }
 
-function seleccionarMascotaJugador() {
- 
-    sectionSeleccionarMascota.style.display = 'none';
-     
+function seleccionarMascotaJugador() {   
  
     if (inputHipodoge.checked) {
         spanMascotaJugador.innerHTML = inputHipodoge.id;
@@ -196,8 +194,11 @@ function seleccionarMascotaJugador() {
         mascotaJugador = inputRatiqueya.id;
     } else {
         alert("No seleccionaste a ninguna mascota")
-        location.reload();
+        return   
+        //location.reload();
     }
+
+    sectionSeleccionarMascota.style.display = 'none';
 
     seleccionarMokepon(mascotaJugador);
 
@@ -265,8 +266,41 @@ function secuenciaAtaques() {
                 boton.style.background = '#112f58';
                 boton.disabled = true;
             }
-            ataqueAleatorioEnemigo()
+            //ataqueAleatorioEnemigo()
+            if(ataqueJugador.length === 5) {
+                enviarAtaques();
+            }
+            
         })
+    })
+}
+
+function enviarAtaques() {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ataques: ataqueJugador
+        })
+    })
+
+    intervalo = setInterval(obtenerAtaques, 50)
+}
+
+function obtenerAtaques() {
+    fetch(`http://localhost:8080/mokepon/${enemigoId}/ataques`)
+        .then(function (res){
+            if(res.ok) {
+                res.json()
+                    .then(function ({ataques}){
+                        if(ataques.length === 5) {
+                            ataqueEnemigo = ataques
+                            combate()
+                    }
+            })
+        }
     })
 }
 
@@ -309,6 +343,8 @@ function indexAmbosOponente(jugador, enemigo) {
 }
 
 function combate() {
+
+    clearInterval(intervalo);  // hacer peticiones al backend
 
     for (let index = 0; index < ataqueJugador.length; index++) {
         if(ataqueJugador[index] === ataqueEnemigo[index]) {
@@ -398,17 +434,19 @@ function pintarCanvas() {
 
     mokeponesEnemigos.forEach(function(mokepon) {
         mokepon.pintarMokepon();
+        revisarColision(mokepon)
     })
 
 /*     hipodogeEnemigo.pintarMokepon();
     capipepoEnemigo.pintarMokepon();
-    ratigueyaEnemigo.pintarMokepon(); */
+    ratigueyaEnemigo.pintarMokepon(); 
 
     if(mascotaJugadorObjeto.velocidadX !== 0 || mascotaJugadorObjeto.velocidadY !== 0) {
         revisarColision(hipodogeEnemigo);
         revisarColision(capipepoEnemigo);
         revisarColision(ratigueyaEnemigo);
     }
+*/   
 }
 
 function enviarPosicion(x, y) {
@@ -426,16 +464,16 @@ function enviarPosicion(x, y) {
         if(res.ok) {
             res.json()
             .then(function ({enemigos}){    // eso es usando spread xq sino seria .then(function (respuesta){respuesta.enemigos})
-                console.log(enemigos)       // enemiogs es la misma variable que se envio en el res.send ({enemigos})
+                console.log(enemigos)       // enemigos es la misma variable que se envio en el res.send ({enemigos})
                 mokeponesEnemigos = enemigos.map(function(enemigo){
                     let mokeponEnemigo = null
                     const mokeponNombre = enemigo.mokepon.nombre || ""
                     if(mokeponNombre === "Hipodoge") {
-                        mokeponEnemigo = new Mokepon ('Hipodoge', '/Imagenes/mokepon_hipodoge_attack.png', 5, '/Imagenes/hipodoge_mini.png');
+                        mokeponEnemigo = new Mokepon ('Hipodoge', '/Imagenes/mokepon_hipodoge_attack.png', 5, '/Imagenes/hipodoge_mini.png', enemigo.id);
                     } else if (mokeponNombre === "Capipepo") {
-                        mokeponEnemigo = new Mokepon ('Capipepo', '/Imagenes/mokepon_capipepo_attack.png', 5, '/Imagenes/capipepo_mini.png');
+                        mokeponEnemigo = new Mokepon ('Capipepo', '/Imagenes/mokepon_capipepo_attack.png', 5, '/Imagenes/capipepo_mini.png', enemigo.id);
                     } else if(mokeponNombre === "Ratigueya") {
-                        mokeponEnemigo = new Mokepon ('Ratigueya', '/Imagenes/mokepon_ratigueya_attack.png', 5, '/Imagenes/ratigueya_mini.png');
+                        mokeponEnemigo = new Mokepon ('Ratigueya', '/Imagenes/mokepon_ratigueya_attack.png', 5, '/Imagenes/ratigueya_mini.png', enemigo.id);
                     }
 
                     mokeponEnemigo.x = enemigo.x;
@@ -538,6 +576,8 @@ function revisarColision(enemigo) {
     detenerMovimiento()
     clearInterval(intervalo);
     console.log('se detecto una colison');
+
+    enemigoId = enemigo.id;
     sectionSeleccionarAtaque.style.display = 'flex';
     sectionVerMapa.style.display = 'none';
     seleccionarMascotaEnemigo(enemigo);
